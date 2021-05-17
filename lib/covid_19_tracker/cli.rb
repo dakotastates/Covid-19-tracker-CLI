@@ -2,52 +2,107 @@
 class Covid19Tracker::CLI
 
   def call
-    list_global
-    menu
+    start
+    start_menu
     goodbye
   end
 
-  def list_global
-    puts "Welcome to the Covid 19 Tracker"
-    puts <<-DOC.gsub /^\s*/, ''
-      Total Cases: 12345
-      Total Recovered: 21345
-      Total Deaths: 432424
-      Atleast 1 dose: 2344
-      Fully Vaccinated: 423424234
-    DOC
+  def start
+    puts "Welcome to the Covid-19 Tracker"
   end
 
-  def display_options
-    puts "Please type a number from the following menu or type exit:"
-    puts "1. Cases"
-    puts "2. Recovered"
-    puts "3. Deaths"
-    puts "4. Search"
-  end
+  # ~~~~~~~~~~~~~~~~~~~~~Menus~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  def menu
-    input = nil
-    while input != "exit"
-      display_options
-      input = gets.strip.downcase
-      case input
-      when "1"
-        puts "Cases: Top 10 Countries"
-      when "2"
-        puts "Recovery: Top 10 Countries"
-      when "3"
-        puts "Deaths: Top 10 Countries"
-      when "4"
-        puts "Search by country"
-      when "global"
-        list_global
-      else
-        puts "Please enter a valid number or type exit"
-      end
+  def start_menu
+  start_menu_print
+  input = nil
+  while input != "exit"
+    input = gets.strip.downcase
+    case input
+    when "1"
+      print_global
+    when "2"
+      country_menu
+    when "3"
+      puts "about"
+    when "4"
+      start
     end
   end
+end
 
+def country_menu
+  country_menu_print
+  input = nil
+  while input != "exit"
+    input = gets.strip.downcase
+    case input
+    when "1"
+      puts "Cases"
+    when "2"
+      puts "Deaths"
+    when "3"
+      puts "Recovered"
+    when "4"
+      puts "Search By Country"
+    when "5"
+      start_menu_print
+
+    end
+  end
+end
+
+# ~~~~~~~~~~~~~~~~~Print Menus~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+def start_menu_print
+  puts "------------------------------------------"
+  puts "Please select a  number: "
+  puts ""
+  puts "1) Global Info"
+  puts "2) Info By Country "
+  puts "3) About Covid 10"
+  puts "4) Go Back"
+  puts ""
+  puts "------------------------------------------"
+end
+
+def short_start_menu_print
+
+  puts "Please select a  number: "
+  puts ""
+  puts "1) Global Info | 2) Info By Country | 3) About Covid 10 | 4) Go Back"
+  puts ""
+  puts "------------------------------------------"
+end
+
+def print_global
+  puts ""
+  puts"-------------Global --------------"
+  puts ""
+  puts "Total Number of Cases:    "
+  puts "Total Number of Deaths:   "
+  puts "Total Active Cases:       "
+  puts "Total Recovered Cases:    "
+  puts "Total Critical Cases:    "
+  puts ""
+  short_start_menu_print
+
+end
+
+def country_menu_print
+  puts "------------------------------------------"
+  puts ""
+  puts "1) Dislay top 10 Countries by Total Cases"
+  puts "2) Dislay top 10 Countries by Total Deaths"
+  puts "3) Dislay top 10 Countries by Total New Cases"
+  puts "4) Search by Country name"
+  puts "5) Go Back"
+  puts ""
+  puts "------------------------------------------"
+
+end
+
+  # ~~~~~~~~~~~~~~~~Goodbye Display~~~~~~~~~~~~~~~~~~~~~~~~~~
   def goodbye
     puts "Thank you for using the Covid 19 CLI Tracker. Please Wash Your Hands."
   end
