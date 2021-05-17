@@ -8,6 +8,8 @@ class Covid19Tracker::CLI
   end
 
   def start
+    @scraper = Covid19Tracker::Scraper.new()
+    @scraper.parse_all
     puts "Welcome to the Covid-19 Tracker"
 
   end
@@ -15,7 +17,7 @@ class Covid19Tracker::CLI
   # ~~~~~~~~~~~~~~~~~~~~~Menus~~~~~~~~~~~~~~~~~~~~~~~~~
 
   def start_menu
-  
+
   start_menu_print
   input = nil
   while input != "exit"
@@ -96,7 +98,7 @@ def country_menu_print
   puts ""
   puts "1) Dislay top 10 Countries by Total Cases"
   puts "2) Dislay top 10 Countries by Total Deaths"
-  puts "3) Dislay top 10 Countries by Total New Cases"
+  puts "3) Dislay top 10 Countries by Total Recovered"
   puts "4) Search by Country name"
   puts "5) Go Back"
   puts ""
