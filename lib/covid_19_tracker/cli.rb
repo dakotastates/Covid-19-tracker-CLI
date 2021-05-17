@@ -1,5 +1,5 @@
 #Our CLI Controller
-class Covid19Tracker::CLI
+class CLI
 
   def call
     start
@@ -8,7 +8,7 @@ class Covid19Tracker::CLI
   end
 
   def start
-    @scraper = Covid19Tracker::Scraper.new()
+    @scraper = Scraper.new()
     @scraper.parse_all
     puts "Welcome to the Covid-19 Tracker"
 

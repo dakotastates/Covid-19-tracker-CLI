@@ -1,4 +1,4 @@
-class Covid19Tracker::Scraper
+class Scraper
 
 URL = "https://covid.ourworldindata.org/data/owid-covid-data.json"
 

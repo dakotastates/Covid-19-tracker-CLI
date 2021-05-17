@@ -2,4 +2,4 @@
 
 require './lib/covid_19_tracker'
 
-Covid19Tracker::CLI.new.call
+CLI.new.call
