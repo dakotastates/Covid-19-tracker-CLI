@@ -9,11 +9,13 @@ class Covid19Tracker::CLI
 
   def start
     puts "Welcome to the Covid-19 Tracker"
+
   end
 
   # ~~~~~~~~~~~~~~~~~~~~~Menus~~~~~~~~~~~~~~~~~~~~~~~~~
 
   def start_menu
+  
   start_menu_print
   input = nil
   while input != "exit"
@@ -38,15 +40,15 @@ def country_menu
     input = gets.strip.downcase
     case input
     when "1"
-      puts "Cases"
+      top10_total_cases_print
     when "2"
-      puts "Deaths"
+      top10_total_deaths_print
     when "3"
-      puts "Recovered"
+      top10_total_recovered_print
     when "4"
       puts "Search By Country"
     when "5"
-      start_menu_print
+      start_menu
 
     end
   end
@@ -99,6 +101,60 @@ def country_menu_print
   puts "5) Go Back"
   puts ""
   puts "------------------------------------------"
+
+end
+
+def short_country_menu_print
+  puts "------------------------------------------"
+  puts ""
+  puts "1) Cases | 2) Deaths | 3) Recovered | 4) Search | 5) Go Back"
+  puts ""
+  puts "------------------------------------------"
+
+end
+
+def top10_total_cases_print
+  puts "-----------------------------------------"
+  puts ""
+  puts "The following countries have the top 10 total cases:"
+  puts ""
+  # sortedData = @scraper.country_data.sort_by {|obj| -obj.total_cases.to_i}
+  # (0..9).each do |i|
+  #   puts "Name: #{sortedData[i].name} --> Total Cases: #{sortedData[i].total_cases}"
+  # end
+  puts ""
+  puts "-----------------------------------------"
+  short_country_menu_print
+
+end
+
+def top10_total_deaths_print
+  puts "-----------------------------------------"
+  puts ""
+  puts "The following countries have the top 10 total deaths:"
+  puts ""
+  # sortedData = @scraper.country_data.sort_by {|obj| -obj.total_cases.to_i}
+  # (0..9).each do |i|
+  #   puts "Name: #{sortedData[i].name} --> Total Cases: #{sortedData[i].total_cases}"
+  # end
+  puts ""
+  puts "-----------------------------------------"
+  short_country_menu_print
+
+end
+
+def top10_total_recovered_print
+  puts "-----------------------------------------"
+  puts ""
+  puts "The following countries have the top 10 recovered:"
+  puts ""
+  # sortedData = @scraper.country_data.sort_by {|obj| -obj.total_cases.to_i}
+  # (0..9).each do |i|
+  #   puts "Name: #{sortedData[i].name} --> Total Cases: #{sortedData[i].total_cases}"
+  # end
+  puts ""
+  puts "-----------------------------------------"
+  short_country_menu_print
 
 end
 
