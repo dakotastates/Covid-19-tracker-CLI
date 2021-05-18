@@ -46,7 +46,7 @@ def country_menu
     when "2"
       top10_total_deaths_print
     when "3"
-      top10_total_recovered_print
+      top10_total_vaccinations_print
     when "4"
       puts "Search By Country"
     when "5"
@@ -98,7 +98,7 @@ def country_menu_print
   puts ""
   puts "1) Dislay top 10 Countries by Total Cases"
   puts "2) Dislay top 10 Countries by Total Deaths"
-  puts "3) Dislay top 10 Countries by Total Recovered"
+  puts "3) Dislay top 10 Countries by Vaccinations"
   puts "4) Search by Country name"
   puts "5) Go Back"
   puts ""
@@ -108,7 +108,7 @@ end
 
 def short_country_menu_print
   puts "-----------------------------------------------"
-  puts "1) Cases | 2) Deaths | 3) Recovered | 4) Search | 5) Go Back"
+  puts "1) Cases | 2) Deaths | 3) Vaccinations | 4) Search | 5) Go Back"
   puts "-----------------------------------------------"
 
 end
@@ -135,29 +135,36 @@ end
 def top10_total_deaths_print
   puts "-----------------------------------------"
   puts ""
-  puts "The following countries have the top 10 total deaths:"
+  puts "The following countries have the top 10 total Deaths:"
   puts ""
-  # sortedData = Country.all.sort_by {|obj| -obj.last_report.total_cases.to_i}
-  # (0..9).each do |i|
-  #   puts "Name: #{sortedData[i].name} --> Total Cases: #{sortedData[i].total_cases}"
-  # end
+  puts "---Country--- --> ---Total Deaths---"
   puts ""
-  puts "-----------------------------------------"
+  sortedData = Country.all_sorted.sort_by { |obj| -obj.last_report.total_deaths.to_i }
+  (0..9).each.with_index(1) do |num, i|
+    puts "#{i}) #{sortedData[num].location} --> #{sortedData[num].last_report.total_deaths}"
+  end
+  # binding.pry
+  puts ""
+  puts "-----------------------------------------------"
   short_country_menu_print
+
 
 end
 
-def top10_total_recovered_print
+def top10_total_vaccinations_print
   puts "-----------------------------------------"
   puts ""
-  puts "The following countries have the top 10 recovered:"
+  puts "The following countries have the top 10 Total People Vaccinations:"
   puts ""
-  # sortedData = @scraper.country_data.sort_by {|obj| -obj.total_cases.to_i}
-  # (0..9).each do |i|
-  #   puts "Name: #{sortedData[i].name} --> Total Cases: #{sortedData[i].total_cases}"
-  # end
+  puts "---Country--- --> ---Vaccinated---"
   puts ""
-  puts "-----------------------------------------"
+  sortedData = Country.all_sorted.sort_by { |obj| -obj.last_report.people_vaccinated.to_i }
+  (0..9).each.with_index(1) do |num, i|
+    puts "#{i}) #{sortedData[num].location} --> #{sortedData[num].last_report.people_vaccinated}"
+  end
+  # binding.pry
+  puts ""
+  puts "-----------------------------------------------"
   short_country_menu_print
 
 end
