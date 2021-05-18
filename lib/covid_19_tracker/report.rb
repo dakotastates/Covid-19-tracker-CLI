@@ -1,5 +1,7 @@
 class Report
 
+  attr_reader :country
+
   @@all = []
 
   def initialize(report)
@@ -8,6 +10,13 @@ class Report
      self.send(("#{key}="), value)
    end
    save
+  end
+
+  def country=(country)
+    raise AssociationTypeMismatchError, "#{country.class} received, Country expected." if !country.is_a?(Country)
+    @country = country
+    country.add_report(self) unless country.reports.include?(self)
+
   end
 
   def save

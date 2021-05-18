@@ -102,30 +102,32 @@ def country_menu_print
   puts "4) Search by Country name"
   puts "5) Go Back"
   puts ""
-  puts "------------------------------------------"
+  puts "-----------------------------------------------"
 
 end
 
 def short_country_menu_print
-  puts "------------------------------------------"
-  puts ""
+  puts "-----------------------------------------------"
   puts "1) Cases | 2) Deaths | 3) Recovered | 4) Search | 5) Go Back"
-  puts ""
-  puts "------------------------------------------"
+  puts "-----------------------------------------------"
 
 end
 
 def top10_total_cases_print
+
   puts "-----------------------------------------"
   puts ""
   puts "The following countries have the top 10 total cases:"
   puts ""
-  # sortedData = @scraper.country_data.sort_by {|obj| -obj.total_cases.to_i}
-  # (0..9).each do |i|
-  #   puts "Name: #{sortedData[i].name} --> Total Cases: #{sortedData[i].total_cases}"
-  # end
+  puts "---Country--- --> ---Total Cases---"
   puts ""
-  puts "-----------------------------------------"
+  sortedData = Country.all_sorted.sort_by { |obj| -obj.last_report.total_cases.to_i }
+  (0..9).each.with_index(1) do |num, i|
+    puts "#{i}) #{sortedData[num].location} --> #{sortedData[num].last_report.total_cases}"
+  end
+  # binding.pry
+  puts ""
+  puts "-----------------------------------------------"
   short_country_menu_print
 
 end
@@ -135,7 +137,7 @@ def top10_total_deaths_print
   puts ""
   puts "The following countries have the top 10 total deaths:"
   puts ""
-  # sortedData = @scraper.country_data.sort_by {|obj| -obj.total_cases.to_i}
+  # sortedData = Country.all.sort_by {|obj| -obj.last_report.total_cases.to_i}
   # (0..9).each do |i|
   #   puts "Name: #{sortedData[i].name} --> Total Cases: #{sortedData[i].total_cases}"
   # end

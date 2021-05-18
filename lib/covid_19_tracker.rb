@@ -11,8 +11,8 @@ require 'open-uri'
 require 'json'
 require 'pry'
 # require 'nokogiri'
-# require 'open-uri'
-# require 'pry'
+
+class AssociationTypeMismatchError < TypeError; end
 
 
 # module Covid19Tracker
