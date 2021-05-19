@@ -112,7 +112,7 @@ def start_menu
       when "1"
         country_demographics_print(country)
       when "2"
-        puts "Lastest Report"
+        country_latest_report_print(country)
       when "3"
         puts "All Reports"
       when "4"
@@ -285,7 +285,33 @@ def start_menu
     puts ""
     puts "-----------------------------------------------"
     short_country_data_menu_print
-    
+
+  end
+
+  def country_latest_report_print(country)
+    puts "----------------------Latest Report----------------------"
+    puts ""
+    puts "--------------------#{country.location}-----------------"
+    puts ""
+    puts "Date: #{country.last_report.date}"
+    puts ""
+    puts "Covid Data"
+    puts ""
+    puts "Total Cases => #{country.last_report.total_cases} -- per million => #{country.last_report.total_cases_per_million}"
+    puts "New Cases => #{country.last_report.new_cases} -- per million => #{country.last_report.new_cases_per_million}"
+    puts "Total Deaths => #{country.last_report.total_deaths} -- per million => #{country.last_report.total_deaths_per_million}"
+    puts "New Deaths => #{country.last_report.new_deaths} -- per million => #{country.last_report.new_deaths_per_million}"
+    puts "Total Tests => #{country.last_report.total_tests} -- per thousand => #{country.last_report.total_tests_per_thousand}"
+    puts ""
+    puts "----------------------Vaccination Data----------------------"
+    puts ""
+    puts "Total Vaccinations => #{country.last_report.total_vaccinations} -- per hundred => #{country.last_report.total_vaccinations_per_hundred}"
+    puts "People Vaccinated => #{country.last_report.people_vaccinated} -- per hundred => #{country.last_report.people_vaccinated_per_hundred}"
+    puts "People Fully Vaccinated => #{country.last_report.people_fully_vaccinated} -- per hundred => #{country.last_report.people_fully_vaccinated_per_hundred}"
+    puts "New Vaccinatinons => #{country.last_report.new_vaccinations}"
+    puts ""
+    puts "-----------------------------------------------"
+    short_country_data_menu_print
   end
 
   # ~~~~~~~~~~~~~~~~Goodbye Display~~~~~~~~~~~~~~~~~~~~~~~~~~
