@@ -103,6 +103,8 @@ def start_menu
     end
   end
 
+
+
   def country_menu(country)
     country_data_print(country)
     input = nil
@@ -114,13 +116,30 @@ def start_menu
       when "2"
         country_latest_report_print(country)
       when "3"
-        puts "All Reports"
+        all_reports_menu(country)
       when "4"
         puts "Go Back"
       when "5"
         start_menu
 
       end
+    end
+  end
+
+  def all_reports_menu(country)
+    all_reports_print(country)
+    input = nil
+    while input != "exit"
+      puts "Enter the number of the Report you'd like more data on."
+      input = gets.strip.downcase
+
+      if input.to_i > 0
+        # country_menu(@sortedReports[input.to_i-1])
+        country_report_print(@sortedReports[input.to_i-1])
+      elsif input == "start"
+        start_menu
+      end
+
     end
   end
 
@@ -251,6 +270,26 @@ def start_menu
 
   end
 
+  def all_reports_print(country)
+    reports = country.reports.length-1
+
+    puts "--------------All Reports---------------------------"
+    puts ""
+    puts "--------------#{country.location}-------------------"
+    puts ""
+    puts "---Date--- --> ---Cases--- --> ---Deaths--- --> ---Vaccinatinos---"
+    puts ""
+    @sortedReports = country.reports.sort_by { |obj| -obj.date }
+    (0..reports).each.with_index(1) do |num, i|
+      puts "#{i}) #{@sortedReports[num].date} --> #{@sortedReports[num].total_cases} --> #{@sortedReports[num].total_deaths} --> #{@sortedReports[num].total_vaccinations}"
+    end
+    # binding.pry
+    puts ""
+    puts "-----------------------------------------------"
+    # short_top_10_menu_print
+
+  end
+
   def country_data_print(country)
     puts "--------------------#{country.location}-----------------"
     puts "Date: #{country.last_report.date}"
@@ -309,6 +348,33 @@ def start_menu
     puts "People Vaccinated => #{country.last_report.people_vaccinated} -- per hundred => #{country.last_report.people_vaccinated_per_hundred}"
     puts "People Fully Vaccinated => #{country.last_report.people_fully_vaccinated} -- per hundred => #{country.last_report.people_fully_vaccinated_per_hundred}"
     puts "New Vaccinatinons => #{country.last_report.new_vaccinations}"
+    puts ""
+    puts "-----------------------------------------------"
+    short_country_data_menu_print
+  end
+
+
+  def country_report_print(report)
+    puts "----------------------Latest Report----------------------"
+    puts ""
+    puts "--------------------#{report.country.location}-----------------"
+    puts ""
+    puts "Date: #{report.date}"
+    puts ""
+    puts "Covid Data"
+    puts ""
+    puts "Total Cases => #{report.total_cases} -- per million => #{report.total_cases_per_million}"
+    puts "New Cases => #{report.new_cases} -- per million => #{report.new_cases_per_million}"
+    puts "Total Deaths => #{report.total_deaths} -- per million => #{report.total_deaths_per_million}"
+    puts "New Deaths => #{report.new_deaths} -- per million => #{report.new_deaths_per_million}"
+    puts "Total Tests => #{report.total_tests} -- per thousand => #{report.total_tests_per_thousand}"
+    puts ""
+    puts "----------------------Vaccination Data----------------------"
+    puts ""
+    puts "Total Vaccinations => #{report.total_vaccinations} -- per hundred => #{report.total_vaccinations_per_hundred}"
+    puts "People Vaccinated => #{report.people_vaccinated} -- per hundred => #{report.people_vaccinated_per_hundred}"
+    puts "People Fully Vaccinated => #{report.people_fully_vaccinated} -- per hundred => #{report.people_fully_vaccinated_per_hundred}"
+    puts "New Vaccinatinons => #{report.new_vaccinations}"
     puts ""
     puts "-----------------------------------------------"
     short_country_data_menu_print
