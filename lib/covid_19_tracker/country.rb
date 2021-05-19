@@ -42,4 +42,14 @@ class Country
      @@all.reject {|country| excluded.include?(country.location) }
   end
 
+  def self.global
+    included = ["World"]
+     @@all.reject {|country| !included.include?(country.location) }
+  end
+
+  def self.continent
+    included = ["Asia", "North America", "Europe", "South America", "Austrailia", "Africa", "European Union"]
+     @@all.reject {|country| !included.include?(country.location) }
+  end
+
 end
