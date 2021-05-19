@@ -43,9 +43,9 @@ def start_menu
       when "1"
         top_10_total_cases_menu
       when "2"
-        top10_total_deaths_print
+        top_10_total_cases_menu
       when "3"
-        top10_total_vaccinations_print
+        top_10_total_vaccinations_menu
       when "4"
         puts "Search By Country"
       when "5"
@@ -71,6 +71,38 @@ def start_menu
     end
   end
 
+  def top_10_total_deaths_menu
+    top10_total_deaths_print
+    input = nil
+    while input != "exit"
+      puts "Enter the number of the country you'd like more data on."
+      input = gets.strip.downcase
+
+      if input.to_i > 0
+        country_menu(@sortedDeathsData[input.to_i-1])
+      elsif input == "start"
+        start_menu
+      end
+
+    end
+  end
+
+  def top_10_total_vaccinations_menu
+    top10_total_vaccinations_print
+    input = nil
+    while input != "exit"
+      puts "Enter the number of the country you'd like more data on."
+      input = gets.strip.downcase
+
+      if input.to_i > 0
+        country_menu(@sortedVaccinationsData[input.to_i-1])
+      elsif input == "start"
+        start_menu
+      end
+
+    end
+  end
+
   def country_menu(country)
     country_data_print(country)
     input = nil
@@ -78,11 +110,11 @@ def start_menu
       input = gets.strip.downcase
       case input
       when "1"
-        puts "Demographics"
+        country_demographics_print(country)
       when "2"
         puts "Lastest Report"
       when "3"
-        puts "All Reprots"
+        puts "All Reports"
       when "4"
         puts "Go Back"
       when "5"
@@ -189,14 +221,14 @@ def start_menu
     puts ""
     puts "---Country--- --> ---Total Deaths---"
     puts ""
-    sortedData = Country.all_sorted.sort_by { |obj| -obj.last_report.total_deaths.to_i }
+    @sortedDeathsData = Country.all_sorted.sort_by { |obj| -obj.last_report.total_deaths.to_i }
     (0..9).each.with_index(1) do |num, i|
-      puts "#{i}) #{sortedData[num].location} --> #{sortedData[num].last_report.total_deaths}"
+      puts "#{i}) #{@sortedDeathsData[num].location} --> #{@sortedDeathsData[num].last_report.total_deaths}"
     end
     # binding.pry
     puts ""
     puts "-----------------------------------------------"
-    short_top_10_menu_print
+    # short_top_10_menu_print
 
 
   end
@@ -208,31 +240,52 @@ def start_menu
     puts ""
     puts "---Country--- --> ---Vaccinated---"
     puts ""
-    sortedData = Country.all_sorted.sort_by { |obj| -obj.last_report.people_vaccinated.to_i }
+    @sortedVaccinationsData = Country.all_sorted.sort_by { |obj| -obj.last_report.people_vaccinated.to_i }
     (0..9).each.with_index(1) do |num, i|
-      puts "#{i}) #{sortedData[num].location} --> #{sortedData[num].last_report.people_vaccinated}"
+      puts "#{i}) #{@sortedVaccinationsData[num].location} --> #{@sortedVaccinationsData[num].last_report.people_vaccinated}"
     end
     # binding.pry
     puts ""
     puts "-----------------------------------------------"
-    short_top_10_menu_print
+    # short_top_10_menu_print
 
   end
 
   def country_data_print(country)
     puts "--------------------#{country.location}-----------------"
-    puts "Date: 111111"
+    puts "Date: #{country.last_report.date}"
     puts ""
-    puts "Total Cases => 1234 -- Per million => 1234"
-    puts "New Cases => -- Per million => 1234"
-    puts "Total Deaths => -- Per million => 1234"
-    puts "New Deaths => -- Per million => 1234"
+    puts "Total Cases => #{country.last_report.total_cases} -- Per million => #{country.last_report.total_cases_per_million}"
+    puts "New Cases => #{country.last_report.new_cases} -- Per million => #{country.last_report.new_cases_per_million}"
+    puts "Total Deaths => #{country.last_report.total_deaths} -- Per million => #{country.last_report.total_deaths_per_million}"
+    puts "New Deaths => #{country.last_report.new_deaths} -- Per million => #{country.last_report.new_deaths_per_million}"
+    puts "Total Vaccinations => #{country.last_report.total_vaccinations} -- Per hundred => #{country.last_report.total_vaccinations_per_hundred}"
     puts ""
-    puts "# of Reports => 1234"
+    puts "# of Reports => #{country.reports.count}"
     puts ""
     puts "-----------------------------------------------"
     short_country_data_menu_print
 
+  end
+
+  def country_demographics_print(country)
+    puts "----------------------Demographics----------------------"
+    puts ""
+    puts "--------------------#{country.location}-----------------"
+    puts ""
+    puts "Population => #{country.population} -- Density => #{country.population_density}"
+    puts "Median Age => #{country.median_age} -- 65+ => #{country.aged_65_older} -- 70+ => #{country.aged_70_older}"
+    puts "Male Smokers => #{country.male_smokers} -- Female Smokers => #{country.female_smokers}"
+    puts "Extreme Poverty => #{country.extreme_poverty} -- GDP per capita => #{country.gdp_per_capita}"
+    puts "Diabetes Prevalence => #{country.diabetes_prevalence}"
+    puts "Cardiovascular Death Rate => #{country.cardiovasc_death_rate}"
+    puts "Handwashing Facilities => #{country.handwashing_facilities}"
+    puts "Hospital Beds per thousand => #{country.hospital_beds_per_thousand}"
+    puts "Life Expectancy => #{country.life_expectancy}"
+    puts ""
+    puts "-----------------------------------------------"
+    short_country_data_menu_print
+    
   end
 
   # ~~~~~~~~~~~~~~~~Goodbye Display~~~~~~~~~~~~~~~~~~~~~~~~~~
