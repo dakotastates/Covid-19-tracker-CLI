@@ -47,7 +47,7 @@ def start_menu
       when "3"
         top_10_total_vaccinations_menu
       when "4"
-        puts "Search By Country"
+        search_by_country
       when "5"
         start_menu
 
@@ -168,23 +168,9 @@ def start_menu
 
   def print_global
     global = Country.global[0]
-    puts "-----------------------------------------"
-    puts ""
-    puts "-------------Global----------------------"
-    puts ""
-    puts "Updated on => #{global.last_report.date}"
-    puts "Cases => #{global.last_report.total_cases}"
-    puts "Deaths => #{global.last_report.total_deaths}"
-    puts "Vaccinated => #{global.last_report.people_vaccinated}"
+    country_data_print(global)
+    # binding.pry
 
-    puts ""
-    #  Country.global.each.with_index(1) do |country, i|
-    #   puts "#{i}) #{country.location} "
-    # end
-    binding.pry
-    puts ""
-    puts "-----------------------------------------------"
-    short_start_menu_print
 
   end
 
@@ -355,7 +341,7 @@ def start_menu
 
 
   def country_report_print(report)
-    puts "----------------------Latest Report----------------------"
+    puts "----------------------Report----------------------"
     puts ""
     puts "--------------------#{report.country.location}-----------------"
     puts ""
@@ -377,7 +363,34 @@ def start_menu
     puts "New Vaccinatinons => #{report.new_vaccinations}"
     puts ""
     puts "-----------------------------------------------"
-    short_country_data_menu_print
+    # short_country_data_menu_print
+  end
+
+  #~~~~~~~~~~~~~~~~~~Search~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  def search_by_country
+    puts "---------------------------------------"
+    puts ""
+    puts "Search by Country Name"
+    puts "type 1) to go back"
+    puts ""
+    puts "---------------------------------------"
+    input = gets.strip.downcase
+    if input == "exit" || input =="1"
+      start_menu
+    end
+    counter = 0
+    Country.all.each do |country|
+      if country.location.strip.downcase == input
+        counter += 1
+        country_menu(country)
+      end
+    end
+
+    if counter == 0
+      puts "Please Check your Spelling"
+      search_by_country
+    end
+
   end
 
   # ~~~~~~~~~~~~~~~~Goodbye Display~~~~~~~~~~~~~~~~~~~~~~~~~~
