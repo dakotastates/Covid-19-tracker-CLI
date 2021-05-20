@@ -27,9 +27,9 @@ def start_menu
       when "2"
         top_10_menu
       when "3"
-        puts "about"
+        about
       when "4"
-        start
+        start_menu
       end
     end
   end
@@ -66,6 +66,8 @@ def start_menu
         country_menu(@sortedCasesData[input.to_i-1])
       elsif input == "start"
         start_menu
+      else
+        puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -82,6 +84,8 @@ def start_menu
         country_menu(@sortedDeathsData[input.to_i-1])
       elsif input == "start"
         start_menu
+      else
+        puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -98,6 +102,8 @@ def start_menu
         country_menu(@sortedVaccinationsData[input.to_i-1])
       elsif input == "start"
         start_menu
+      else
+        puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -118,8 +124,6 @@ def start_menu
       when "3"
         all_reports_menu(country)
       when "4"
-        puts "Go Back"
-      when "5"
         start_menu
 
       end
@@ -138,6 +142,8 @@ def start_menu
         country_report_print(@sortedReports[input.to_i-1])
       elsif input == "start"
         start_menu
+      else
+        puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -159,11 +165,9 @@ def start_menu
 
   def short_start_menu_print
 
-    puts "Please select a  number: "
-    puts ""
+    puts "-----------------------------------------------"
     puts "1) Global Info | 2) Info By Country | 3) About Covid 10 | 4) Go Back"
-    puts ""
-    puts "------------------------------------------"
+    puts "-----------------------------------------------"
   end
 
   def print_global
@@ -177,9 +181,9 @@ def start_menu
   def top_10_menu_print
     puts "------------------------------------------"
     puts ""
-    puts "1) Dislay top 10 Countries by Total Cases"
-    puts "2) Dislay top 10 Countries by Total Deaths"
-    puts "3) Dislay top 10 Countries by Vaccinations"
+    puts "1) Display top 10 Countries by Total Cases"
+    puts "2) Display top 10 Countries by Total Deaths"
+    puts "3) Display top 10 Countries by Vaccinations"
     puts "4) Search by Country name"
     puts "5) Go Back"
     puts ""
@@ -267,7 +271,7 @@ def start_menu
     puts ""
     @sortedReports = country.reports.sort_by { |obj| -obj.date }
     (0..reports).each.with_index(1) do |num, i|
-      puts "#{i}) #{@sortedReports[num].date} --> #{@sortedReports[num].total_cases} --> #{@sortedReports[num].total_deaths} --> #{@sortedReports[num].total_vaccinations}"
+      puts "#{i}) #{@sortedReports[num].date} --> #{@sortedReports[num].total_cases.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} --> #{@sortedReports[num].total_deaths.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} --> #{@sortedReports[num].total_vaccinations.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
     end
     # binding.pry
     puts ""
@@ -280,16 +284,21 @@ def start_menu
     puts "--------------------#{country.location}-----------------"
     puts "Date: #{country.last_report.date}"
     puts ""
-    puts "Total Cases => #{country.last_report.total_cases} -- Per million => #{country.last_report.total_cases_per_million}"
-    puts "New Cases => #{country.last_report.new_cases} -- Per million => #{country.last_report.new_cases_per_million}"
-    puts "Total Deaths => #{country.last_report.total_deaths} -- Per million => #{country.last_report.total_deaths_per_million}"
-    puts "New Deaths => #{country.last_report.new_deaths} -- Per million => #{country.last_report.new_deaths_per_million}"
-    puts "Total Vaccinations => #{country.last_report.total_vaccinations} -- Per hundred => #{country.last_report.total_vaccinations_per_hundred}"
+    puts "Total Cases => #{country.last_report.total_cases.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- Per million => #{country.last_report.total_cases_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "New Cases => #{country.last_report.new_cases.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- Per million => #{country.last_report.new_cases_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "Total Deaths => #{country.last_report.total_deaths.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- Per million => #{country.last_report.total_deaths_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "New Deaths => #{country.last_report.new_deaths.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- Per million => #{country.last_report.new_deaths_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "Total Vaccinations => #{country.last_report.total_vaccinations.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- Per hundred => #{country.last_report.total_vaccinations_per_hundred.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
     puts ""
     puts "# of Reports => #{country.reports.count}"
     puts ""
     puts "-----------------------------------------------"
-    short_country_data_menu_print
+
+    if country.location == "World"
+      short_start_menu_print
+    else
+      short_country_data_menu_print
+    end
 
   end
 
@@ -298,7 +307,7 @@ def start_menu
     puts ""
     puts "--------------------#{country.location}-----------------"
     puts ""
-    puts "Population => #{country.population} -- Density => #{country.population_density}"
+    puts "Population => #{country.population.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- Density => #{country.population_density}"
     puts "Median Age => #{country.median_age} -- 65+ => #{country.aged_65_older} -- 70+ => #{country.aged_70_older}"
     puts "Male Smokers => #{country.male_smokers} -- Female Smokers => #{country.female_smokers}"
     puts "Extreme Poverty => #{country.extreme_poverty} -- GDP per capita => #{country.gdp_per_capita}"
@@ -349,18 +358,18 @@ def start_menu
     puts ""
     puts "Covid Data"
     puts ""
-    puts "Total Cases => #{report.total_cases} -- per million => #{report.total_cases_per_million}"
-    puts "New Cases => #{report.new_cases} -- per million => #{report.new_cases_per_million}"
-    puts "Total Deaths => #{report.total_deaths} -- per million => #{report.total_deaths_per_million}"
-    puts "New Deaths => #{report.new_deaths} -- per million => #{report.new_deaths_per_million}"
-    puts "Total Tests => #{report.total_tests} -- per thousand => #{report.total_tests_per_thousand}"
+    puts "Total Cases => #{report.total_cases.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- per million => #{report.total_cases_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "New Cases => #{report.new_cases.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- per million => #{report.new_cases_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "Total Deaths => #{report.total_deaths.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- per million => #{report.total_deaths_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "New Deaths => #{report.new_deaths.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- per million => #{report.new_deaths_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "Total Tests => #{report.total_tests.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- per thousand => #{report.total_tests_per_thousand.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
     puts ""
     puts "----------------------Vaccination Data----------------------"
     puts ""
-    puts "Total Vaccinations => #{report.total_vaccinations} -- per hundred => #{report.total_vaccinations_per_hundred}"
-    puts "People Vaccinated => #{report.people_vaccinated} -- per hundred => #{report.people_vaccinated_per_hundred}"
-    puts "People Fully Vaccinated => #{report.people_fully_vaccinated} -- per hundred => #{report.people_fully_vaccinated_per_hundred}"
-    puts "New Vaccinatinons => #{report.new_vaccinations}"
+    puts "Total Vaccinations => #{report.total_vaccinations.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- per hundred => #{report.total_vaccinations_per_hundred.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "People Vaccinated => #{report.people_vaccinated.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- per hundred => #{report.people_vaccinated_per_hundred.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "People Fully Vaccinated => #{report.people_fully_vaccinated.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- per hundred => #{report.people_fully_vaccinated_per_hundred.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "New Vaccinatinons => #{report.new_vaccinations.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
     puts ""
     puts "-----------------------------------------------"
     # short_country_data_menu_print
@@ -393,7 +402,12 @@ def start_menu
 
   end
 
-  # ~~~~~~~~~~~~~~~~Goodbye Display~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # ~~~~~~~~~~~~~~~~~ About Display ~~~~~~~~~~~~~~~~~~~~~~~~~~
+  def about
+    puts "The CLI Tracker was developed by Dakota States as part of a Flatiron School CLI Project. The data source: https://covid.ourworldindata.org/data/owid-covid-data.json"
+  end
+
+  # ~~~~~~~~~~~~~~~~ Goodbye Display ~~~~~~~~~~~~~~~~~~~~~~~~~~
   def goodbye
     puts "Thank you for using the Covid 19 CLI Tracker. Please Wash Your Hands."
   end
