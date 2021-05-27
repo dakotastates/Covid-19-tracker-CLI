@@ -59,15 +59,15 @@ def start_menu
     top10_total_cases_print
     input = nil
     while input != "exit"
-      puts "Enter the number of the country you'd like more data on."
+      # puts "Enter the number of the country you'd like more data on."
       input = gets.strip.downcase
 
       if input.to_i > 0
         country_menu(@sortedCasesData[input.to_i-1])
       elsif input == "start"
         start_menu
-      else
-        puts "I'm not sure what you want. Please type a number or type exit to leave"
+      # else
+        # puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -77,15 +77,15 @@ def start_menu
     top10_total_deaths_print
     input = nil
     while input != "exit"
-      puts "Enter the number of the country you'd like more data on."
+      # puts "Enter the number of the country you'd like more data on."
       input = gets.strip.downcase
 
       if input.to_i > 0
         country_menu(@sortedDeathsData[input.to_i-1])
       elsif input == "start"
         start_menu
-      else
-        puts "I'm not sure what you want. Please type a number or type exit to leave"
+      # else
+        # puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -95,15 +95,15 @@ def start_menu
     top10_total_vaccinations_print
     input = nil
     while input != "exit"
-      puts "Enter the number of the country you'd like more data on."
+      # puts "Enter the number of the country you'd like more data on."
       input = gets.strip.downcase
 
       if input.to_i > 0
         country_menu(@sortedVaccinationsData[input.to_i-1])
       elsif input == "start"
         start_menu
-      else
-        puts "I'm not sure what you want. Please type a number or type exit to leave"
+      # else
+        # puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -134,7 +134,7 @@ def start_menu
     all_reports_print(country)
     input = nil
     while input != "exit"
-      puts "Enter the number of the Report you'd like more data on."
+      # puts "Enter the number of the Report you'd like more data on."
       input = gets.strip.downcase
 
       if input.to_i > 0
@@ -142,8 +142,8 @@ def start_menu
         country_report_print(@sortedReports[input.to_i-1])
       elsif input == "start"
         start_menu
-      else
-        puts "I'm not sure what you want. Please type a number or type exit to leave"
+      # else
+        # puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -289,6 +289,7 @@ def start_menu
     puts "Total Deaths => #{country.last_report.total_deaths.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- Per million => #{country.last_report.total_deaths_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
     puts "New Deaths => #{country.last_report.new_deaths.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- Per million => #{country.last_report.new_deaths_per_million.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
     puts "Total Vaccinations => #{country.last_report.total_vaccinations.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} -- Per hundred => #{country.last_report.total_vaccinations_per_hundred.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse}"
+    puts "New Vaccinations => #{country.last_report.new_vaccinations.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\\1,').reverse} "
     puts ""
     puts "# of Reports => #{country.reports.count}"
     puts ""
