@@ -26,6 +26,7 @@ def start_menu
         print_global
       when "2"
         top_10_menu
+        break
       when "3"
         about
       when "4"
@@ -42,14 +43,19 @@ def start_menu
       case input
       when "1"
         top_10_total_cases_menu
+        break
       when "2"
         top_10_total_cases_menu
+        break
       when "3"
         top_10_total_vaccinations_menu
+        break
       when "4"
         search_by_country
+        break
       when "5"
         start_menu
+        break
 
       end
     end
@@ -64,10 +70,11 @@ def start_menu
 
       if input.to_i > 0
         country_menu(@sortedCasesData[input.to_i-1])
+        break
       elsif input == "start"
         start_menu
       # else
-        # puts "I'm not sure what you want. Please type a number or type exit to leave"
+      #   puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -82,10 +89,11 @@ def start_menu
 
       if input.to_i > 0
         country_menu(@sortedDeathsData[input.to_i-1])
+        break
       elsif input == "start"
         start_menu
       # else
-        # puts "I'm not sure what you want. Please type a number or type exit to leave"
+      #   puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -100,10 +108,11 @@ def start_menu
 
       if input.to_i > 0
         country_menu(@sortedVaccinationsData[input.to_i-1])
+        break
       elsif input == "start"
         start_menu
       # else
-        # puts "I'm not sure what you want. Please type a number or type exit to leave"
+      #   puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -123,6 +132,7 @@ def start_menu
         country_latest_report_print(country)
       when "3"
         all_reports_menu(country)
+        break
       when "4"
         start_menu
 
@@ -142,8 +152,10 @@ def start_menu
         country_report_print(@sortedReports[input.to_i-1])
       elsif input == "start"
         start_menu
-      # else
-        # puts "I'm not sure what you want. Please type a number or type exit to leave"
+      # elsif input == "exit"
+      #   break
+      else
+        puts "I'm not sure what you want. Please type a number or type exit to leave"
       end
 
     end
@@ -157,7 +169,7 @@ def start_menu
     puts ""
     puts "1) Global Info"
     puts "2) Info By Country "
-    puts "3) About Covid 10"
+    puts "3) About"
     puts "4) Go Back"
     puts ""
     puts "------------------------------------------"
@@ -166,7 +178,7 @@ def start_menu
   def short_start_menu_print
 
     puts "-----------------------------------------------"
-    puts "1) Global Info | 2) Info By Country | 3) About Covid 10 | 4) Go Back"
+    puts "1) Global Info | 2) Info By Country | 3) About | 4) Go Back"
     puts "-----------------------------------------------"
   end
 
